@@ -2,10 +2,18 @@
 * @Author: Marte
 * @Date:   2017-07-11 16:17:27
 * @Last Modified by:   Marte
-* @Last Modified time: 2017-07-11 16:29:00
+* @Last Modified time: 2017-07-12 09:07:39
 */
 body {
-    font-family: sans-serif;
+    font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
+    font-size: 100%;
+}
+
+#status {
+    white-space: pre; // ????
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 25rem;/* 400px */
 }
 
 input {

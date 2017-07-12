@@ -2,7 +2,7 @@
 * @Author: Marte
 * @Date:   2017-07-12 09:06:23
 * @Last Modified by:   Marte
-* @Last Modified time: 2017-07-12 09:27:02
+* @Last Modified time: 2017-07-12 10:12:03
 */
 
 'use strict';
@@ -33,10 +33,11 @@ function getCurrentTab(callback) {
 
 function renderTabInfo(tab) {
     var infoHTML = '';
-    Object.keys(tab).map(key => {
-        infoHTML += '<li> ${key}: ${tab[key]} </li>'
+    Object.keys(tab).map((key) => {
+        infoHTML += `<li> ${key}: ${tab[key]}</li>`;
+        // infoHTML += '<li> ${key}: ${tab[key]} </li>'
     })
-    document.getElementById("tab-prop").innerHTML = infoHTML;
+    document.getElementById("tab-popup").innerHTML = infoHTML;
 }
 
 function renderStatus(statusText) {

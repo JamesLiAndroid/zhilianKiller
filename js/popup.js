@@ -2,7 +2,7 @@
 * @Author: Marte
 * @Date:   2017-07-12 09:06:23
 * @Last Modified by:   Marte
-* @Last Modified time: 2017-07-12 11:46:09
+* @Last Modified time: 2017-07-12 17:25:49
 */
 
 'use strict';
@@ -50,11 +50,35 @@ function renderStatus(statusText) {
     document.getElementById('status').textContent = statusText;
 }
 
+function renderAllTable() {
+    console.log("执行js代码！");
+    chrome.tabs.executeScript(null, {
+        file: 'js/table.js'
+    });
+    // 注意：js文件必须使用完整路径！
+    console.log("js代码执行完成！");
+    // window.close();
+
+}
+
+// function renderAllTableFront() {
+//     // 获取当前页面所有table标签
+//     var tables = document.querySelectorAll("table");
+//     // 设置table背景颜色
+//     for (var i = tables.length - 1; i >= 0; i--) {
+//         tables[i].addEventListener('click', renderAllTable)
+//     };
+// }
+
 document.addEventListener('DOMContentLoaded', function() {
     getCurrentTab(function(tab) {
         renderStatus('Current tabs\'s url is ' + tab.url);
         renderTabInfo(tab)
-    })
+
+        // 渲染所有table标签
+        var button = document.getElementById("renderTables");
+        button.onclick = renderAllTable;
+    });
 })
 
 /**
@@ -63,31 +87,31 @@ document.addEventListener('DOMContentLoaded', function() {
  * @return {[type]}     [返回一个包含url所有信息的字典]
  */
 function parseURL(url) {
- var a =  document.createElement('a');
- a.href = url;
- return {
- source: url,
- protocol: a.protocol.replace(':',''),
- host: a.hostname,
- port: a.port,
- query: a.search,
- params: (function(){
-     var ret = {},
-         seg = a.search.replace(/^\?/,'').split('&'),
-         len = seg.length, i = 0, s;
-     for (;i<len;i++) {
-         if (!seg[i]) { continue; }
-         s = seg[i].split('=');
-         ret[s[0]] = s[1];
-     }
-     return ret;
- })(),
- file: (a.pathname.match(/\/([^\/?#]+)$/i) || [,''])[1],
- hash: a.hash.replace('#',''),
- path: a.pathname.replace(/^([^\/])/,'/$1'),
- relative: (a.href.match(/tps?:\/\/[^\/]+(.+)/) || [,''])[1],
- segments: a.pathname.replace(/^\//,'').split('/')
- };
+    var a =  document.createElement('a');
+    a.href = url;
+    return {
+        source: url,
+        protocol: a.protocol.replace(':',''),
+        host: a.hostname,
+        port: a.port,
+        query: a.search,
+        params: (function(){
+             var ret = {},
+                 seg = a.search.replace(/^\?/,'').split('&'),
+                 len = seg.length, i = 0, s;
+             for (;i<len;i++) {
+                 if (!seg[i]) { continue; }
+                 s = seg[i].split('=');
+                 ret[s[0]] = s[1];
+             }
+             return ret;
+        })(),
+        file: (a.pathname.match(/\/([^\/?#]+)$/i) || [,''])[1],
+        hash: a.hash.replace('#',''),
+        path: a.pathname.replace(/^([^\/])/,'/$1'),
+        relative: (a.href.match(/tps?:\/\/[^\/]+(.+)/) || [,''])[1],
+        segments: a.pathname.replace(/^\//,'').split('/')
+     };
 }
 
 

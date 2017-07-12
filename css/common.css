@@ -2,7 +2,7 @@
 * @Author: Marte
 * @Date:   2017-07-11 16:17:27
 * @Last Modified by:   Marte
-* @Last Modified time: 2017-07-12 09:07:39
+* @Last Modified time: 2017-07-12 15:56:57
 */
 body {
     font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
@@ -19,8 +19,5 @@ body {
 input {
     color: black;
     font-size: .9375rem;
-}
-input:hover, input:focus {
-    color: gray;
-    font-size: 1.25rem;
+    margin: 0 auto;
 }

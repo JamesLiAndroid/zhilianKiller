@@ -2,7 +2,7 @@
 * @Author: Marte
 * @Date:   2017-07-12 09:06:23
 * @Last Modified by:   Marte
-* @Last Modified time: 2017-07-12 10:12:03
+* @Last Modified time: 2017-07-12 11:46:09
 */
 
 'use strict';
@@ -37,6 +37,12 @@ function renderTabInfo(tab) {
         infoHTML += `<li> ${key}: ${tab[key]}</li>`;
         // infoHTML += '<li> ${key}: ${tab[key]} </li>'
     })
+    // TODO：控制页面内容显示
+    var urlContent = parseURL(tab.url);
+    var params = urlContent.query;
+    console.log("当前数据信息：" + urlContent.params);
+    infoHTML += `<li> params: ${params}</li>`;
+
     document.getElementById("tab-popup").innerHTML = infoHTML;
 }
 
@@ -50,5 +56,38 @@ document.addEventListener('DOMContentLoaded', function() {
         renderTabInfo(tab)
     })
 })
+
+/**
+ * 解析url中的参数
+ * @param  {[type]} url [description]
+ * @return {[type]}     [返回一个包含url所有信息的字典]
+ */
+function parseURL(url) {
+ var a =  document.createElement('a');
+ a.href = url;
+ return {
+ source: url,
+ protocol: a.protocol.replace(':',''),
+ host: a.hostname,
+ port: a.port,
+ query: a.search,
+ params: (function(){
+     var ret = {},
+         seg = a.search.replace(/^\?/,'').split('&'),
+         len = seg.length, i = 0, s;
+     for (;i<len;i++) {
+         if (!seg[i]) { continue; }
+         s = seg[i].split('=');
+         ret[s[0]] = s[1];
+     }
+     return ret;
+ })(),
+ file: (a.pathname.match(/\/([^\/?#]+)$/i) || [,''])[1],
+ hash: a.hash.replace('#',''),
+ path: a.pathname.replace(/^([^\/])/,'/$1'),
+ relative: (a.href.match(/tps?:\/\/[^\/]+(.+)/) || [,''])[1],
+ segments: a.pathname.replace(/^\//,'').split('/')
+ };
+}
 
 

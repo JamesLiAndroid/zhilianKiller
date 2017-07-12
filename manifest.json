@@ -16,7 +16,8 @@
         "activeTab"
     ],
     "background":{//background script即插件运行的环境
-        "page":"background.html"
+        // "page": "background.html",
+        "scripts": ["js/background.js"]
         // "scripts": ["js/jquery-1.9.1.min.js","js/background.js"]//数组.chrome会在扩展启动时自动创建一个包含所有指定脚本的页面
     }
     // ,
